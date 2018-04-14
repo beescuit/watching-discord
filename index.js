@@ -9,8 +9,6 @@ var first = true;
 
 var lastRequest = false;
 
-const moment = require('moment');
-
 const express = require('express');
 const app = express();
 

@@ -9,6 +9,7 @@
   "author": "BeeCoding",
   "license": "ISC",
   "dependencies": {
+    "discord-rpc": "./RPC",
     "express": "^4.16.3"
   }
 }

@@ -5,7 +5,7 @@ This is a browser extension (and server) wich shows the video you are watching o
 
 #### Supported services:
 
-* Youtube
+* YouTube
 * Netflix
 
 #### Supported browsers:

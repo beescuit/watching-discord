@@ -112,6 +112,7 @@ app.post('/changestatus', (req, res) => {
     res.send('success!');
   } else if (req.body.type == "youtube/stop") {
     youtube = false;
+    res.send('stopped');
     rpcs.youtube.clearActivity();
   } else if (req.body.type == "netflix") {
     netflix = {
@@ -125,6 +126,7 @@ app.post('/changestatus', (req, res) => {
   } else if (req.body.type == "netflix/stop") {
     netflix = false;
     rpcs.netflix.clearActivity();
+    res.send('stopped');
   }
 });
 

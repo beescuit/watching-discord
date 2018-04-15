@@ -1,19 +1,28 @@
 const port = 3000;
 
-const DiscordRPC = require('./RPC');
+const DRPCs = {
+  youtube: require('./RPC'),
+  netflix: require('./RPC')
+}
 
-const ClientId = '434442633457172482';
+const cIds = {
+  youtube: '434442633457172482',
+  netflix: '435127726186430475'
+};
 
 var youtube = false;
-var first = true;
-
-var lastRequest = false;
+var netflix = false;
 
 const express = require('express');
 const app = express();
 
-DiscordRPC.register(ClientId);
-const rpc = new DiscordRPC.Client({ transport: 'ipc' });
+DRPCs.youtube.register(cIds.youtube);
+DRPCs.netflix.register(cIds.netflix);
+
+const rpcs = {
+  youtube: new DRPCs.youtube.Client({ transport: 'ipc' }),
+  netflix: new DRPCs.netflix.Client({ transport: 'ipc' }),
+}
 
 async function setActivity() {
   if (youtube) {
@@ -21,10 +30,10 @@ async function setActivity() {
       // timed out
       console.log("Timed out.");
       youtube = false;
-      rpc.clearActivity();
+      rpcs.youtube.clearActivity();
     } else {
       console.log("Setting activity");
-      rpc.setActivity({
+      rpcs.youtube.setActivity({
         details: youtube.title,
         state: youtube.author,
         // startTimestamp: youtube.time,
@@ -34,11 +43,46 @@ async function setActivity() {
         instance: false
       });
     }
+  } else if (netflix) {
+    if (Math.round((new Date()).getTime() / 1000) - netflix.last > 5) {
+      // timed out
+      console.log("Timed out.");
+      netflix = false;
+      rpcs.netflix.clearActivity();
+    } else {
+      console.log("Setting activity");
+      if (netflix.desc) {
+        rpcs.netflix.setActivity({
+          details: netflix.title,
+          state: netflix.desc,
+          // startTimestamp: youtube.time,
+          endTimestamp: netflix.end,
+          largeImageKey: 'netflix',
+          largeImageText: 'Netflix',
+          instance: false
+        });
+      } else {
+        rpcs.netflix.setActivity({
+          details: netflix.title,
+          // startTimestamp: netflix.time,
+          endTimestamp: netflix.end,
+          largeImageKey: 'netflix',
+          largeImageText: 'Netflix',
+          instance: false
+        });
+      }
+    }
   }
 }
 
-rpc.on('ready', () => {
-  console.log("RPC ready!");
+rpcs.youtube.on('ready', () => {
+  console.log("Youtube RPC ready!");
+  setInterval(() => {
+    setActivity();
+  }, 15e3);
+});
+rpcs.netflix.on('ready', () => {
+  console.log("Netflix RPC ready!");
   setInterval(() => {
     setActivity();
   }, 15e3);
@@ -53,7 +97,7 @@ app.use(function(req, res, next) {
 });
 
 app.post('/changestatus', (req, res) => {
-  if (!rpc) {
+  if (!rpcs.youtube || !rpcs.netflix) {
     res.send("RPC not ready!");
     return;
   }
@@ -65,17 +109,25 @@ app.post('/changestatus', (req, res) => {
       end: Math.round((new Date()).getTime() / 1000) + (Math.round(req.body.duration, 0) - Math.round(req.body.time, 0)),
       last: Math.round((new Date()).getTime() / 1000)
     }
-    if (first) {
-      setActivity();
-      first = false;
+    res.send('success!');
+  } else if (req.body.type == "youtube/stop") {
+    youtube = false;
+    rpcs.youtube.clearActivity();
+  } else if (req.body.type == "netflix") {
+    netflix = {
+      title: req.body.title,
+      desc: req.body.desc,
+      time: Math.round((new Date()).getTime() / 1000) - Math.round(req.body.time, 0),
+      end: Math.round((new Date()).getTime() / 1000) + (Math.round(req.body.duration, 0) - Math.round(req.body.time, 0)),
+      last: Math.round((new Date()).getTime() / 1000)
     }
     res.send('success!');
-  }
-  if (req.body.type == "youtube/stop") {
-    youtube = false;
-    rpc.clearActivity();
+  } else if (req.body.type == "netflix/stop") {
+    netflix = false;
+    rpcs.netflix.clearActivity();
   }
 });
 
 app.listen(port, () => console.log(`Web server started! (${port})`));
-rpc.login(ClientId).catch(console.error);
+rpcs.youtube.login(cIds.youtube).catch(console.error);
+rpcs.netflix.login(cIds.netflix).catch(console.error);

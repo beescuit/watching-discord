@@ -11,7 +11,7 @@
   "manifest_version": 2,
   "content_scripts": [
     {
-      "matches": ["https://www.youtube.com/watch?v=*"],
+      "matches": ["*://www.youtube.com/watch?v=*", "*://www.netflix.com/watch/*"],
       "js": ["RichPresence.js"]
     }
   ]

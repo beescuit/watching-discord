@@ -3,6 +3,15 @@
 
 This is a browser extension (and server) wich shows the video you are watching on your discord profile via it's RPC.
 
+#### Supported services:
+
+* Youtube
+* Netflix
+
+#### Supported browsers:
+
+* Chrome
+
 #### Instalation:
 
 To install the extension you'll need to clone the repo as following:

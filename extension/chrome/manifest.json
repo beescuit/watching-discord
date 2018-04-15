@@ -1,6 +1,6 @@
 {
   "name": "Discord RichPresence for Chrome",
-  "description": "This will enable youtube and netflix (WIP) RichPresence on your discord profile.",
+  "description": "This will enable some video services as RichPresence on your discord profile.",
   "icons": {
     "128": "assets/discord-logo.png"
   },

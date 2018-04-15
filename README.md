@@ -12,7 +12,7 @@ This is a browser extension (and server) wich shows the video you are watching o
 
 * Chrome
 
-#### Instalation:
+#### Installation:
 
 To install the extension you'll need to clone the repo as following:
 

@@ -14,5 +14,8 @@
       "matches": ["*://www.youtube.com/watch?v=*", "*://www.netflix.com/watch/*"],
       "js": ["RichPresence.js"]
     }
+  ],
+  "web_accessible_resources": [
+    "youtube.js"
   ]
 }

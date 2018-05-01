@@ -13,7 +13,7 @@ if (window.location.href.startsWith("https://www.youtube.com/watch?v=")) {
   video.ontimeupdate = () => {
     // Dumb thing to do but we don't have access to the window.ytplayer variable =(
     var title = document.getElementsByClassName("title")[0].innerHTML.split(">")[1].split("<")[0];
-    var author = document.getElementById("owner-name").innerHTML.split(">")[1].split("<")[0];
+    var author = document.querySelectorAll("#owner-name")[1].innerHTML.split(">")[1].split("<")[0];
     // Get time and duration from HTML's api
     var time = video.currentTime;
     var duration = video.duration;

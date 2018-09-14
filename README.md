@@ -16,7 +16,7 @@ This is a browser extension (and server) wich shows the video you are watching o
 
 To install the extension you'll need to clone the repo as following:
 
-`git clone --recursive https://github.com/BeeCodingOfc/watching-discord.git && cd watching-discord/`
+`git clone https://github.com/BeeCodingOfc/watching-discord.git && cd watching-discord/`
 
 Then, install all the server's dependencies:
 

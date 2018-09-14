@@ -1,8 +1,8 @@
 const port = 3000;
 
 const DRPCs = {
-  youtube: require('./RPC'),
-  netflix: require('./RPC')
+  youtube: require('discord-rpc'),
+  netflix: require('discord-rpc')
 }
 
 const cIds = {
@@ -15,9 +15,6 @@ var netflix = false;
 
 const express = require('express');
 const app = express();
-
-DRPCs.youtube.register(cIds.youtube);
-DRPCs.netflix.register(cIds.netflix);
 
 const rpcs = {
   youtube: new DRPCs.youtube.Client({ transport: 'ipc' }),
@@ -131,5 +128,5 @@ app.post('/changestatus', (req, res) => {
 });
 
 app.listen(port, () => console.log(`Web server started! (${port})`));
-rpcs.youtube.login(cIds.youtube).catch(console.error);
-rpcs.netflix.login(cIds.netflix).catch(console.error);
+rpcs.youtube.login({ clientId: cIds.youtube }).catch(console.error);
+rpcs.netflix.login({ clientId: cIds.netflix }).catch(console.error);

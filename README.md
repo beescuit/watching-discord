@@ -1,7 +1,7 @@
 # Watching-Discord
 ### WARNING: THIS EXTENSION IS A WIP, REPORT BUGS IN THE ISSUES SECTION.
 
-This is a browser extension (and server) wich shows the video you are watching on your discord profile via it's RPC.
+This is a browser extension (and server) which shows the video you are watching on your discord profile via it's RPC.
 
 #### Supported services:
 

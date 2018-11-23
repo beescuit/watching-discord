@@ -1,5 +1,6 @@
+### Discontinued in favor of https://github.com/Timeraa/PreMiD
+
 # Watching-Discord
-### WARNING: THIS EXTENSION IS A WIP, REPORT BUGS IN THE ISSUES SECTION.
 
 This is a browser extension (and server) which shows the video you are watching on your discord profile via it's RPC.
 
